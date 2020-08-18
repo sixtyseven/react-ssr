@@ -1,0 +1,36 @@
+{
+  "name": "ssr",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev:build-server": "NODE_ENV=developement webpack --config config/webpack.server.dev.js -w",
+    "dev:server": "browser-refresh ./dev-server-build/index.js",
+    "webpack": "webpack --config config/webpack.config.js -wd"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "browser-refresh": "^1.7.3",
+    "compression": "^1.7.4",
+    "express": "^4.17.1",
+    "handlebars": "^4.7.6",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.10.5",
+    "@babel/core": "^7.11.1",
+    "@babel/node": "^7.10.5",
+    "@babel/plugin-proposal-class-properties": "^7.10.4",
+    "@babel/plugin-transform-runtime": "^7.11.0",
+    "@babel/polyfill": "^7.10.4",
+    "@babel/preset-env": "^7.11.0",
+    "@babel/preset-react": "^7.10.4",
+    "babel-loader": "^8.1.0",
+    "nodemon": "^2.0.4",
+    "webpack": "^4.44.1",
+    "webpack-cli": "^3.3.12",
+    "webpack-node-externals": "^2.5.1"
+  }
+}
