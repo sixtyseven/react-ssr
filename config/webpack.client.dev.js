@@ -5,7 +5,7 @@ const config = {
     app: ["./src/components/index.js"],
   },
   output: {
-    path: path.resolve(__dirname, "dist"),
+    path: path.resolve("dist"),
     filename: "[name].js",
   },
   module: {

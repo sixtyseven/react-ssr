@@ -12,5 +12,5 @@ app.use("/firstssr", ssr);
 const port = process.env.PORT || 3030;
 
 app.listen(port, function listenHandler() {
-  console.info(`Running on ${port}...`);
+  console.info(`Running on ${port}... v2 `);
 });

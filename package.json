@@ -4,14 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev:build-server": "NODE_ENV=developement webpack --config config/webpack.server.dev.js -w",
-    "dev:server": "browser-refresh ./dev-server-build/index.js",
-    "webpack": "webpack --config config/webpack.config.js -wd"
+    "start": "node scripts/start.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "browser-refresh": "^1.7.3",
     "compression": "^1.7.4",
     "express": "^4.17.1",
     "handlebars": "^4.7.6",
@@ -28,7 +25,8 @@
     "@babel/preset-env": "^7.11.0",
     "@babel/preset-react": "^7.10.4",
     "babel-loader": "^8.1.0",
-    "nodemon": "^2.0.4",
+    "browser-sync": "^2.26.12",
+    "chalk": "^4.1.0",
     "webpack": "^4.44.1",
     "webpack-cli": "^3.3.12",
     "webpack-node-externals": "^2.5.1"

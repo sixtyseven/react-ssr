@@ -43,7 +43,7 @@ class App extends React.Component {
     return (
       //do something here where there is a button that will replace the text
       <div>
-        <label>Your name v7</label>
+        <label>Your name v27</label>
         <input
           type="text"
           id="txtName"

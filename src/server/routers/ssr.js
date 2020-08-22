@@ -14,6 +14,7 @@ router.get("/", async (req, res) => {
   <h1>My First Server Side Render</h1>
   <div id="reactele">{{{reactele}}}</div>
   <script src="/app.js" charset="utf-8"></script>
+  <script src="${process.env.BROWSER_REFRESH_URL}"></script>
   </body>
   </html>
   `;
