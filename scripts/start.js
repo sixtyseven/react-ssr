@@ -36,8 +36,11 @@ function start() {
       );
     }
 
-    console.log(chalk.green("[compile server] Done server processing"));
-    // Done processing
+    console.log(chalk.green("[compile server] success"));
+    if (browserSync) {
+      browserSync.reload();
+      console.log(chalk.green("[browserSync] Reload Browser"));
+    }
   });
 
   const clientCompiler = webpack(clientConfig);
@@ -50,10 +53,10 @@ function start() {
       );
     }
 
-    console.log(chalk.green("[compile client] Done client processing"));
+    console.log(chalk.green("[compile client] success"));
     if (browserSync) {
       browserSync.reload();
-      console.log(chalk.green("[compile client] Reload Browser"));
+      console.log(chalk.green("[browserSync] Reload Browser"));
     }
   });
 }

@@ -4,16 +4,22 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "dev:build-server": "NODE_ENV=developement webpack --config config/webpack.server.dev.js",
+    "dev:server": "forever start ./dev-server-build/index.js",
+    "dev:client": "webpack --config config/webpack.client.dev.js -wd",
     "start": "node scripts/start.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@reduxjs/toolkit": "^1.4.0",
     "compression": "^1.7.4",
     "express": "^4.17.1",
     "handlebars": "^4.7.6",
     "react": "^16.13.1",
-    "react-dom": "^16.13.1"
+    "react-dom": "^16.13.1",
+    "react-router-dom": "^5.2.0",
+    "redux": "^4.0.5"
   },
   "devDependencies": {
     "@babel/cli": "^7.10.5",

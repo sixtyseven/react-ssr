@@ -1,1 +1,5 @@
-React SSR app
+### React SSR app
+
+#### Start Development
+
+`npm start`

@@ -1,5 +1,5 @@
 import express from "express";
-import App from "../../components/app";
+import App from "../../App";
 import React from "react";
 import { renderToString } from "react-dom/server";
 import hbs from "handlebars";
@@ -11,7 +11,7 @@ router.get("/", async (req, res) => {
   <html>
   <head><title>My First SSR</title></head>
   <body>
-  <h1>My First Server Side Render</h1>
+  <h1>My SSR Template</h1>
   <div id="reactele">{{{reactele}}}</div>
   <script src="/app.js" charset="utf-8"></script>
   <script src="${process.env.BROWSER_REFRESH_URL}"></script>
