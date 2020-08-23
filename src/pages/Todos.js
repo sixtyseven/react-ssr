@@ -1,4 +1,5 @@
 import React from "react";
+import { Helmet } from "react-helmet";
 import loadData from "../apis/loadData";
 
 class Todos extends React.Component {
@@ -41,11 +42,16 @@ class Todos extends React.Component {
 
     const { data } = this.state;
     return (
-      <ul>
-        {data.map((todo) => (
-          <li key={todo.id}>{todo.title}</li>
-        ))}
-      </ul>
+      <>
+        <Helmet>
+          <title>To Dos</title>
+        </Helmet>
+        <ul>
+          {data.map((todo) => (
+            <li key={todo.id}>{todo.title}</li>
+          ))}
+        </ul>
+      </>
     );
   }
 }

@@ -3,6 +3,7 @@ import compression from "compression";
 import hbs from "handlebars";
 import serialize from "serialize-javascript";
 import React from "react";
+import { Helmet } from "react-helmet";
 import { renderToString } from "react-dom/server";
 import { StaticRouter, matchPath } from "react-router-dom";
 import App from "../App";
@@ -25,9 +26,28 @@ app.get("/*", (req, res) => {
 
   promise.then((data) => {
     const context = { data };
+
+    const reactComp = renderToString(
+      <StaticRouter location={req.url} context={context}>
+        <App />
+      </StaticRouter>
+    );
+
+    const helmet = Helmet.renderStatic();
+    let headTitle = helmet.title.toString();
+
+    // title is not set
+    if (headTitle.includes("></title>")) {
+      headTitle = "<title>Default Title</title>";
+    }
+
     const theHtml = `
-    <html>
-    <head><title>My First SSR</title></head>
+    <html ${helmet.htmlAttributes.toString()}>
+    <head>
+    ${headTitle}
+    ${helmet.meta.toString()}
+    ${helmet.link.toString()}
+    </head>
     <body>
     <h1>My SSR Template</h1>
     <div id="reactele">{{{reactele}}}</div>
@@ -36,11 +56,7 @@ app.get("/*", (req, res) => {
     </html>
     `;
     const hbsTemplate = hbs.compile(theHtml);
-    const reactComp = renderToString(
-      <StaticRouter location={req.url} context={context}>
-        <App />
-      </StaticRouter>
-    );
+
     const htmlToSend = hbsTemplate({ reactele: reactComp }).replace(
       "</head>",
       `<script>window.__ROUTE_DATA__ = ${serialize(data)}</script></head>`
@@ -52,5 +68,5 @@ app.get("/*", (req, res) => {
 const port = process.env.PORT || 3030;
 
 app.listen(port, function listenHandler() {
-  console.info(`Running on ${port}... v8 `);
+  console.info(`Running on ${port}... v9 `);
 });
