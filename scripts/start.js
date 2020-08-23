@@ -8,6 +8,7 @@ const webpack = require("webpack");
 const chalk = require("chalk");
 const browserSync = require("browser-sync");
 const childProcess = require("child_process");
+const nodemon = require("nodemon");
 
 const serverConfig = require("../config/webpack.server.dev");
 const clientConfig = require("../config/webpack.client.dev");
@@ -18,29 +19,53 @@ const port = process.env.PORT || 3030;
 start();
 
 function start() {
-  runScript("./dev-server-build/index.js", (err) => {
-    if (err) {
-      console.error(chalk.red("[runScript]"), err);
-      throw err;
-    }
-  });
+  let inited = false;
+  let compiled = {
+    server: false,
+    client: false,
+  };
 
-  initBrowserSync();
+  const init = () => {
+    console.log("init");
 
+    nodemon({
+      script: "./dev-server-build/index.js",
+      ext: "js",
+      watch: "dev-server-build",
+    });
+    nodemon
+      .on("start", function () {
+        if (!inited) {
+          console.log(chalk.green("Nodemon has started"));
+          inited = true;
+        }
+      })
+      .on("quit", function () {
+        console.log(chalk.green("Nodemon has quit"));
+        process.exit();
+      })
+      .on("restart", function (files) {
+        console.log(chalk.green("Nodemon restarted due to: "), files);
+      });
+
+    compiled = {
+      server: false,
+      client: false,
+    };
+
+    initBrowserSync();
+  };
   serverCompiler.watch({}, (err, stats) => {
     if (err || stats.hasErrors()) {
       // Handle errors here
       console.error(
         chalk.red("[compile server] webpack server compile error"),
-        error
+        err
       );
     }
 
     console.log(chalk.green("[compile server] success"));
-    if (browserSync) {
-      browserSync.reload();
-      console.log(chalk.green("[browserSync] Reload Browser"));
-    }
+    compiled.server = true;
   });
 
   const clientCompiler = webpack(clientConfig);
@@ -49,48 +74,19 @@ function start() {
       // Handle errors here
       console.error(
         chalk.red("[compile client] webpack client compile error"),
-        error
+        err
       );
     }
 
     console.log(chalk.green("[compile client] success"));
-    if (browserSync) {
+    compiled.client = true;
+    if (inited) {
       browserSync.reload();
       console.log(chalk.green("[browserSync] Reload Browser"));
+    } else if (compiled.server && compiled.client) {
+      init();
     }
   });
-}
-
-function runScript(scriptPath, callback) {
-  // keep track of whether callback has been invoked to prevent
-  // multiple invocations
-  let invoked = false;
-
-  const process = childProcess.fork(scriptPath);
-
-  // listen for errors as they may prevent the exit event from firing
-  process.on("error", function (err) {
-    console.log("process error");
-    if (invoked) return;
-    invoked = true;
-    callback(err);
-  });
-
-  // execute the callback once the process has finished running
-  process.on("exit", function (code) {
-    console.log("process exit");
-    if (invoked) return;
-    invoked = true;
-    const err = code === 0 ? null : new Error("exit code " + code);
-    callback(err);
-  });
-
-  process.on("SIGINT", function () {
-    console.log("process SIGINT");
-    process.exit();
-  });
-
-  return process;
 }
 
 function initBrowserSync(cb) {

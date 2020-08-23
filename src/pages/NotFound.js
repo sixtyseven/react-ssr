@@ -1,20 +1,5 @@
-function Status({ code, children }) {
-  return (
-    <Route
-      render={({ staticContext }) => {
-        if (staticContext) staticContext.status = code;
-        return children;
-      }}
-    />
-  );
-}
-
-function NotFound() {
-  return (
-    <Status code={404}>
-      <div>
-        <h1>Sorry, can’t find that.</h1>
-      </div>
-    </Status>
-  );
+import React from "react";
+export default function NotFound({ staticContext = {} }) {
+  staticContext.status = 404;
+  return <h1>[DEBUG] Oops, nothing here!</h1>;
 }

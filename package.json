@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev:build-server": "NODE_ENV=developement webpack --config config/webpack.server.dev.js",
-    "dev:server": "forever start ./dev-server-build/index.js",
+    "dev:server": "node ./dev-server-build/index.js",
     "dev:client": "webpack --config config/webpack.client.dev.js -wd",
     "start": "node scripts/start.js"
   },
@@ -16,12 +16,16 @@
     "compression": "^1.7.4",
     "express": "^4.17.1",
     "handlebars": "^4.7.6",
+    "isomorphic-fetch": "^2.2.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-router-config": "^5.1.1",
     "react-router-dom": "^5.2.0",
-    "redux": "^4.0.5"
+    "redux": "^4.0.5",
+    "serialize-javascript": "^4.0.0"
   },
   "devDependencies": {
+    "nodemon": "^2.0.4",
     "@babel/cli": "^7.10.5",
     "@babel/core": "^7.11.1",
     "@babel/node": "^7.10.5",

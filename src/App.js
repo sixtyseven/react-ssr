@@ -1,29 +1,26 @@
 import React from "react";
 import { Switch, Route, Link } from "react-router-dom";
-import NotFound from "./pages/NotFound";
+import { renderRoutes } from "react-router-config";
+import Routes from "./routes";
 
 export default function App() {
   return (
     <div>
       <nav>
         <ul>
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-          <li>
-            <Link to="/about">About</Link>
-          </li>
-          <li>
-            <Link to="/users">Users</Link>
-          </li>
+          {Routes.map((route) => {
+            if (!route.path) {
+              return null;
+            }
+            return (
+              <li key={route.label}>
+                <Link to={route.path}>{route.label}</Link>
+              </li>
+            );
+          })}
         </ul>
       </nav>
-      <Switch>
-        <Route path="/" component={Home} />
-        <Route path="/about" component={About} />
-        <Route path="/Users" component={Users} />
-        <Route component={NotFound} />
-      </Switch>
+      <Switch>{renderRoutes(Routes)}</Switch>
     </div>
   );
 }
