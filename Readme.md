@@ -4,6 +4,10 @@
 
 `npm start`
 
+#### Build for production
+
+`npm run build`
+
 #### Ref:
 
 1. https://www.digitalocean.com/community/tutorials/react-server-side-rendering

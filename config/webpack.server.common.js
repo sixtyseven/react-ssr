@@ -1,19 +1,22 @@
 const path = require("path");
 const nodeExternals = require("webpack-node-externals");
-const APP_PATH = require("./appPath");
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
-console.log("APP_PATH ", APP_PATH);
+const outputPath =
+  process.env.NODE_ENV === "development"
+    ? path.resolve("dist-server-dev")
+    : path.resolve("dist-server");
 
 module.exports = {
-  mode: "development",
-  entry: APP_PATH.server.entry,
+  mode: process.env.NODE_ENV === "development" ? "development" : "production",
+  entry: "./src/server/index.js",
 
   target: "node",
 
   externals: [nodeExternals()],
 
   output: {
-    path: path.resolve("dev-server-build"),
+    path: outputPath,
     filename: "index.js",
   },
 
@@ -28,6 +31,8 @@ module.exports = {
       },
     ],
   },
+
+  plugins: [new CleanWebpackPlugin()],
 
   resolve: {
     extensions: [".js", ".jsx"],

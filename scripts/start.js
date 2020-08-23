@@ -7,13 +7,13 @@ process.env.NODE_ENV = "development";
 const webpack = require("webpack");
 const chalk = require("chalk");
 const browserSync = require("browser-sync");
-const childProcess = require("child_process");
 const nodemon = require("nodemon");
 
-const serverConfig = require("../config/webpack.server.dev");
-const clientConfig = require("../config/webpack.client.dev");
+const serverConfig = require("../config/webpack.server.common");
+const clientConfig = require("../config/webpack.client.common");
 
 const serverCompiler = webpack(serverConfig);
+const clientCompiler = webpack(clientConfig);
 const port = process.env.PORT || 3030;
 
 start();
@@ -29,9 +29,9 @@ function start() {
     console.log("init");
 
     nodemon({
-      script: "./dev-server-build/index.js",
+      script: "./dist-server-dev/index.js",
       ext: "js",
-      watch: "dev-server-build",
+      watch: "dist-server-dev",
     });
     nodemon
       .on("start", function () {
@@ -68,7 +68,6 @@ function start() {
     compiled.server = true;
   });
 
-  const clientCompiler = webpack(clientConfig);
   clientCompiler.watch({}, (err, stats) => {
     if (err || stats.hasErrors()) {
       // Handle errors here

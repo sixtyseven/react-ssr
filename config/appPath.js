@@ -5,9 +5,9 @@ const projectDir = path.join(__dirname, "..");
 module.exports = {
   server: {
     entry: path.join(projectDir, "src", "server", "index.js"),
-    output: path.join(projectDir, "dev-server-build"),
+    output: path.join(projectDir, "dist-server-dev"),
   },
   client: {
-    entry: path.join(projectDir, "todo"),
+    output: path.join(projectDir, "dist"),
   },
 };

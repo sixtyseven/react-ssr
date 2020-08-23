@@ -4,10 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev:build-server": "NODE_ENV=developement webpack --config config/webpack.server.dev.js",
-    "dev:server": "node ./dev-server-build/index.js",
-    "dev:client": "webpack --config config/webpack.client.dev.js -wd",
-    "start": "node scripts/start.js"
+    "dev:build-server": "NODE_ENV=developement webpack --config config/webpack.server.common.js",
+    "dev:client": "webpack --config config/webpack.client.common.js -wd",
+    "prod": "PORT=80 node ./dist-server/index.js",
+    "start": "node scripts/start.js",
+    "build": "node scripts/build.js"
   },
   "author": "",
   "license": "ISC",
@@ -26,7 +27,6 @@
     "serialize-javascript": "^4.0.0"
   },
   "devDependencies": {
-    "nodemon": "^2.0.4",
     "@babel/cli": "^7.10.5",
     "@babel/core": "^7.11.1",
     "@babel/node": "^7.10.5",
@@ -38,6 +38,8 @@
     "babel-loader": "^8.1.0",
     "browser-sync": "^2.26.12",
     "chalk": "^4.1.0",
+    "clean-webpack-plugin": "^3.0.0",
+    "nodemon": "^2.0.4",
     "webpack": "^4.44.1",
     "webpack-cli": "^3.3.12",
     "webpack-node-externals": "^2.5.1"

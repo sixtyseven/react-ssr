@@ -9,10 +9,14 @@ import { StaticRouter, matchPath } from "react-router-dom";
 import App from "../App";
 import Routes from "../routes";
 
+const isDevelopEnv = process.env.NODE_ENV === "development";
+
 const app = express();
 
 app.use(compression());
-app.use(express.static("dist"));
+isDevelopEnv
+  ? app.use(express.static("dist-dev"))
+  : app.use(express.static("dist"));
 
 app.get("/*", (req, res) => {
   const currentRoute = Routes.find((route) => matchPath(req.url, route)) || {};
@@ -49,7 +53,6 @@ app.get("/*", (req, res) => {
     ${helmet.link.toString()}
     </head>
     <body>
-    <h1>My SSR Template</h1>
     <div id="reactele">{{{reactele}}}</div>
     <script src="/app.js" charset="utf-8"></script>
     </body>
@@ -68,5 +71,5 @@ app.get("/*", (req, res) => {
 const port = process.env.PORT || 3030;
 
 app.listen(port, function listenHandler() {
-  console.info(`Running on ${port}... v9 `);
+  console.info(`Running on PORT ${port}... v13 `);
 });
