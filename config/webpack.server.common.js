@@ -1,14 +1,16 @@
 const path = require("path");
 const nodeExternals = require("webpack-node-externals");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const { APP_DIST_FOLDER } = require("./appPath");
 
-const outputPath =
-  process.env.NODE_ENV === "development"
-    ? path.resolve("dist-server-dev")
-    : path.resolve("dist-server");
+const isDevelop = process.env.NODE_ENV === "development";
+
+const outputPath = isDevelop
+  ? path.resolve(APP_DIST_FOLDER.distServerDev)
+  : path.resolve(APP_DIST_FOLDER.distServerProd);
 
 module.exports = {
-  mode: process.env.NODE_ENV === "development" ? "development" : "production",
+  mode: isDevelop ? "development" : "production",
   entry: "./src/server/index.js",
 
   target: "node",

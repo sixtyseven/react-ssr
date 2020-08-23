@@ -1,13 +1,8 @@
-const path = require("path");
-
-const projectDir = path.join(__dirname, "..");
-
-module.exports = {
-  server: {
-    entry: path.join(projectDir, "src", "server", "index.js"),
-    output: path.join(projectDir, "dist-server-dev"),
-  },
-  client: {
-    output: path.join(projectDir, "dist"),
-  },
+const APP_DIST_FOLDER = {
+  distProd: "dist",
+  distServerProd: "dist-server",
+  distDev: "dist-dev",
+  distServerDev: "dist-server-dev",
 };
+
+module.exports.APP_DIST_FOLDER = APP_DIST_FOLDER;

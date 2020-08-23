@@ -12,7 +12,7 @@ export default function App() {
         <title>Title Set In Helmet</title>
       </Helmet>
       <header>
-        <h1>My SSR Dev Environment v5</h1>
+        <h1>My SSR Dev Environment v6</h1>
         <nav>
           <ul>
             {Routes.map((route) => {

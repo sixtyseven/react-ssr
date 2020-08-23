@@ -11,6 +11,7 @@ const nodemon = require("nodemon");
 
 const serverConfig = require("../config/webpack.server.common");
 const clientConfig = require("../config/webpack.client.common");
+const { APP_DIST_FOLDER } = require("../config/appPath");
 
 const serverCompiler = webpack(serverConfig);
 const clientCompiler = webpack(clientConfig);
@@ -29,9 +30,9 @@ function start() {
     console.log("init");
 
     nodemon({
-      script: "./dist-server-dev/index.js",
+      script: `./${APP_DIST_FOLDER.distServerDev}/index.js`,
       ext: "js",
-      watch: "dist-server-dev",
+      watch: `${APP_DIST_FOLDER.distServerDev}`,
     });
     nodemon
       .on("start", function () {

@@ -8,6 +8,7 @@ import { renderToString } from "react-dom/server";
 import { StaticRouter, matchPath } from "react-router-dom";
 import App from "../App";
 import Routes from "../routes";
+import { APP_DIST_FOLDER } from "../../config/appPath";
 
 const isDevelopEnv = process.env.NODE_ENV === "development";
 
@@ -15,8 +16,8 @@ const app = express();
 
 app.use(compression());
 isDevelopEnv
-  ? app.use(express.static("dist-dev"))
-  : app.use(express.static("dist"));
+  ? app.use(express.static(APP_DIST_FOLDER.distDev))
+  : app.use(express.static(APP_DIST_FOLDER.distProd));
 
 app.get("/*", (req, res) => {
   const currentRoute = Routes.find((route) => matchPath(req.url, route)) || {};
@@ -71,5 +72,5 @@ app.get("/*", (req, res) => {
 const port = process.env.PORT || 3030;
 
 app.listen(port, function listenHandler() {
-  console.info(`Running on PORT ${port}... v13 `);
+  console.info(`Running on PORT ${port}... v14 `);
 });

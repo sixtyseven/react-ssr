@@ -1,11 +1,12 @@
 const path = require("path");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const { APP_DIST_FOLDER } = require("./appPath");
 
 const isDevelopment = process.env.NODE_ENV === "development";
 
 const outputPath = isDevelopment
-  ? path.resolve("dist-dev")
-  : path.resolve("dist");
+  ? path.resolve(APP_DIST_FOLDER.distDev)
+  : path.resolve(APP_DIST_FOLDER.distProd);
 
 const plugins = [];
 if (!isDevelopment) {
