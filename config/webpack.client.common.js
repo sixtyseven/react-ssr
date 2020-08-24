@@ -22,6 +22,10 @@ const config = {
     path: outputPath,
     filename: "[name].js",
   },
+  // or source-map for production,
+  // but should configure server to disallow access to
+  // the Source Map file for normal users!
+  devtool: isDevelopment ? "eval-cheap-source-map" : "none",
   module: {
     rules: [
       {

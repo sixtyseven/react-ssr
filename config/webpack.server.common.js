@@ -21,6 +21,7 @@ module.exports = {
     path: outputPath,
     filename: "index.js",
   },
+  devtool: isDevelopment ? "eval-cheap-source-map" : "none",
 
   module: {
     rules: [
