@@ -6,10 +6,10 @@
   "scripts": {
     "dev:build-server": "NODE_ENV=developement webpack --config config/webpack.server.common.js",
     "dev:client": "webpack --config config/webpack.client.common.js -wd",
-    "prod": "PORT=80 node ./dist-server/index.js",
+    "prod": "PORT=80 node ./dist/prod-server/index.js",
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
-    "debug": "node --inspect --inspect-brk ./dist-server-dev/index.js"
+    "debug": "node --inspect --inspect-brk ./dist/dev-server/index.js"
   },
   "author": "",
   "license": "ISC",

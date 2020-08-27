@@ -32,7 +32,10 @@ function start() {
     nodemon({
       script: `./${APP_DIST_FOLDER.distServerDev}/index.js`,
       ext: "js",
-      watch: [`${APP_DIST_FOLDER.distServerDev}`, `${APP_DIST_FOLDER.distDev}`],
+      watch: [
+        `${APP_DIST_FOLDER.distServerDev}`,
+        // `${APP_DIST_FOLDER.distDev}/static/index.html`,
+      ],
     });
     nodemon
       .on("start", function () {

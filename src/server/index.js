@@ -41,8 +41,6 @@ app.get("/*", (req, res) => {
         .send("Oops, error happened when reading index.html file!");
     }
 
-    debugger;
-
     promise.then((pageData) => {
       const context = { data: pageData };
 
@@ -51,8 +49,6 @@ app.get("/*", (req, res) => {
           <App />
         </StaticRouter>
       );
-
-      console.log("[debug] test 0010");
 
       const helmet = Helmet.renderStatic();
       let headTitle = helmet.title.toString();
