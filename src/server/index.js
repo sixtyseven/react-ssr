@@ -1,3 +1,5 @@
+import path from "path";
+import fs from "fs";
 import express from "express";
 import compression from "compression";
 import hbs from "handlebars";
@@ -13,11 +15,11 @@ import { APP_DIST_FOLDER } from "../../config/appPath";
 const isDevelopEnv = process.env.NODE_ENV === "development";
 
 const app = express();
+const dist = isDevelopEnv ? APP_DIST_FOLDER.distDev : APP_DIST_FOLDER.distProd;
 
 app.use(compression());
-isDevelopEnv
-  ? app.use(express.static(APP_DIST_FOLDER.distDev))
-  : app.use(express.static(APP_DIST_FOLDER.distProd));
+
+app.use("/static", express.static(path.resolve(dist, "static")));
 
 app.get("/*", (req, res) => {
   const currentRoute = Routes.find((route) => matchPath(req.url, route)) || {};
@@ -29,48 +31,58 @@ app.get("/*", (req, res) => {
     promise = Promise.resolve(null);
   }
 
-  promise.then((data) => {
-    const context = { data };
+  const indexFile = path.resolve(`./${dist}/static/index.html`);
 
-    const reactComp = renderToString(
-      <StaticRouter location={req.url} context={context}>
-        <App />
-      </StaticRouter>
-    );
-
-    const helmet = Helmet.renderStatic();
-    let headTitle = helmet.title.toString();
-
-    // title is not set
-    if (headTitle.includes("></title>")) {
-      headTitle = "<title>Default Title</title>";
+  fs.readFile(indexFile, "utf8", (err, fileData) => {
+    if (err) {
+      console.error("Something went wrong:", err);
+      return res
+        .status(500)
+        .send("Oops, error happened when reading index.html file!");
     }
 
-    const theHtml = `
-    <html ${helmet.htmlAttributes.toString()}>
-    <head>
-    ${headTitle}
-    ${helmet.meta.toString()}
-    ${helmet.link.toString()}
-    </head>
-    <body>
-    <div id="reactele">{{{reactele}}}</div>
-    <script src="/app.js" charset="utf-8"></script>
-    </body>
-    </html>
-    `;
-    const hbsTemplate = hbs.compile(theHtml);
+    debugger;
 
-    const htmlToSend = hbsTemplate({ reactele: reactComp }).replace(
-      "</head>",
-      `<script>window.__ROUTE_DATA__ = ${serialize(data)}</script></head>`
-    );
-    res.send(htmlToSend);
+    promise.then((pageData) => {
+      const context = { data: pageData };
+
+      const reactComp = renderToString(
+        <StaticRouter location={req.url} context={context}>
+          <App />
+        </StaticRouter>
+      );
+
+      console.log("[debug] test 0010");
+
+      const helmet = Helmet.renderStatic();
+      let headTitle = helmet.title.toString();
+
+      // title is not set
+      if (headTitle.includes("></title>")) {
+        headTitle = "<title>Default Title</title>";
+      }
+
+      const head = headTitle + helmet.meta.toString() + helmet.link.toString();
+      const routeDataJs = `<script>window.__ROUTE_DATA__ = ${serialize(
+        pageData
+      )}</script>`;
+
+      const hbsTemplate = hbs.compile(fileData);
+
+      const htmlToSend = hbsTemplate({
+        htmlAttributes: helmet.htmlAttributes.toString(),
+        head,
+        routeDataJs,
+        reactele: reactComp,
+      }).replace('src="app.', 'src="static/app.');
+
+      res.send(htmlToSend);
+    });
   });
 });
 
 const port = process.env.PORT || 3030;
 
 app.listen(port, function listenHandler() {
-  console.info(`Running on PORT ${port}... v14 `);
+  console.info(`Running on PORT ${port}... v16 `);
 });

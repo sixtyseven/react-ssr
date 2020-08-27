@@ -11,3 +11,11 @@ export default (resourceType) => {
       return data.filter((_, idx) => idx < 10);
     });
 };
+
+export function getInitCounter() {
+  return Promise.resolve((resolve, reject) => {
+    setTimeout(() => {
+      resolve(52);
+    }, 5000);
+  });
+}

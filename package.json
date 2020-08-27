@@ -8,7 +8,8 @@
     "dev:client": "webpack --config config/webpack.client.common.js -wd",
     "prod": "PORT=80 node ./dist-server/index.js",
     "start": "node scripts/start.js",
-    "build": "node scripts/build.js"
+    "build": "node scripts/build.js",
+    "debug": "node --inspect --inspect-brk ./dist-server-dev/index.js"
   },
   "author": "",
   "license": "ISC",
@@ -21,6 +22,7 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-helmet": "^6.1.0",
+    "react-redux": "^7.2.1",
     "react-router-config": "^5.1.1",
     "react-router-dom": "^5.2.0",
     "redux": "^4.0.5",
@@ -39,7 +41,13 @@
     "browser-sync": "^2.26.12",
     "chalk": "^4.1.0",
     "clean-webpack-plugin": "^3.0.0",
+    "css-loader": "^4.2.1",
+    "html-webpack-plugin": "^4.3.0",
     "nodemon": "^2.0.4",
+    "null-loader": "^4.0.0",
+    "sass": "^1.26.10",
+    "sass-loader": "^9.0.3",
+    "style-loader": "^1.2.1",
     "webpack": "^4.44.1",
     "webpack-cli": "^3.3.12",
     "webpack-node-externals": "^2.5.1"

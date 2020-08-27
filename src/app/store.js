@@ -6,3 +6,7 @@ export default configureStore({
     counter: counterReducer,
   },
 });
+
+export const DEFAULT_STATE = {
+  counter: 0,
+};

@@ -1,5 +1,6 @@
 const path = require("path");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { APP_DIST_FOLDER } = require("./appPath");
 
 const isDevelopment = process.env.NODE_ENV === "development";
@@ -8,18 +9,13 @@ const outputPath = isDevelopment
   ? path.resolve(APP_DIST_FOLDER.distDev)
   : path.resolve(APP_DIST_FOLDER.distProd);
 
-const plugins = [];
-if (!isDevelopment) {
-  plugins.push(new CleanWebpackPlugin());
-}
-
 const config = {
   mode: "production", // for both ssr dev and production
   entry: {
     app: ["./src/index.js"],
   },
   output: {
-    path: outputPath,
+    path: path.join(outputPath, "static"),
     filename: "[name].js",
   },
   // or source-map for production,
@@ -38,9 +34,32 @@ const config = {
         },
         exclude: /node_modules/,
       },
+      {
+        test: /\.s[ac]ss$/i,
+        use: [
+          // Creates `style` nodes from JS strings
+          "style-loader",
+          // Translates CSS into CommonJS
+          "css-loader",
+          // Compiles Sass to CSS
+          {
+            loader: "sass-loader",
+            options: {
+              // Prefer `dart-sass`
+              implementation: require("sass"),
+            },
+          },
+        ],
+      },
     ],
   },
-  plugins: plugins,
+  plugins: [
+    // new CleanWebpackPlugin(),
+    new HtmlWebpackPlugin({
+      template: "public/index.html",
+      minify: !isDevelopment,
+    }),
+  ],
   resolve: {
     extensions: [".js", ".jsx", ".json", ".wasm", ".mjs", ".scss"],
   },

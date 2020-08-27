@@ -41,6 +41,7 @@ class Todos extends React.Component {
     }
 
     const { data } = this.state;
+
     return (
       <>
         <Helmet>

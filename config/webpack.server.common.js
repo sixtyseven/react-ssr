@@ -3,14 +3,14 @@ const nodeExternals = require("webpack-node-externals");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const { APP_DIST_FOLDER } = require("./appPath");
 
-const isDevelop = process.env.NODE_ENV === "development";
+const isDevelopment = process.env.NODE_ENV === "development";
 
-const outputPath = isDevelop
+const outputPath = isDevelopment
   ? path.resolve(APP_DIST_FOLDER.distServerDev)
   : path.resolve(APP_DIST_FOLDER.distServerProd);
 
 module.exports = {
-  mode: isDevelop ? "development" : "production",
+  mode: isDevelopment ? "development" : "production",
   entry: "./src/server/index.js",
 
   target: "node",
@@ -32,6 +32,7 @@ module.exports = {
         },
         exclude: /node_modules/,
       },
+      { test: /\.(s[ca]ss|css)$/, loader: "null-loader" },
     ],
   },
 
