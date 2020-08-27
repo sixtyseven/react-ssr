@@ -25,12 +25,9 @@ const config = {
   module: {
     rules: [
       {
-        test: /\.(js|jsx)$/,
+        test: /\.(jsx?|tsx?)$/,
         use: {
           loader: "babel-loader",
-          options: {
-            presets: ["@babel/preset-env", "@babel/preset-react"],
-          },
         },
         exclude: /node_modules/,
       },
@@ -61,7 +58,16 @@ const config = {
     }),
   ],
   resolve: {
-    extensions: [".js", ".jsx", ".json", ".wasm", ".mjs", ".scss"],
+    extensions: [
+      ".js",
+      ".jsx",
+      ".ts",
+      ".tsx",
+      ".json",
+      ".wasm",
+      ".mjs",
+      ".scss",
+    ],
   },
 };
 
