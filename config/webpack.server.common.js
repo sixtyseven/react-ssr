@@ -26,11 +26,11 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.(js|tsx?)$/,
+        test: /\.(jsx?|tsx?)$/,
         use: {
           loader: "babel-loader",
         },
-        exclude: /node_modules/,
+        include: [path.resolve("src"), path.resolve("config")],
       },
       { test: /\.(s[ca]ss|css)$/, loader: "null-loader" },
     ],
@@ -40,5 +40,6 @@ module.exports = {
 
   resolve: {
     extensions: [".js", ".jsx", ".ts", ".tsx"],
+    symlinks: false,
   },
 };

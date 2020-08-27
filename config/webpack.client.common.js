@@ -29,7 +29,7 @@ const config = {
         use: {
           loader: "babel-loader",
         },
-        exclude: /node_modules/,
+        include: path.resolve("src"),
       },
       {
         test: /\.s[ac]ss$/i,
@@ -47,6 +47,7 @@ const config = {
             },
           },
         ],
+        include: path.resolve("src"),
       },
     ],
   },
@@ -58,16 +59,8 @@ const config = {
     }),
   ],
   resolve: {
-    extensions: [
-      ".js",
-      ".jsx",
-      ".ts",
-      ".tsx",
-      ".json",
-      ".wasm",
-      ".mjs",
-      ".scss",
-    ],
+    extensions: [".js", ".jsx", ".ts", ".tsx", ".scss"],
+    symlinks: false,
   },
 };
 
