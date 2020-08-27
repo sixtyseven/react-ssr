@@ -1,12 +1,12 @@
-import React from "react";
+import * as React from "react";
 import { Helmet } from "react-helmet";
-import { Switch, Link } from "react-router-dom";
-import { renderRoutes } from "react-router-config";
-import Routes from "./routes";
 import { Provider } from "react-redux";
-import store from "./app/store";
+import { renderRoutes } from "react-router-config";
+import { Link, Switch } from "react-router-dom";
+import store from "src/app/store";
+import Routes from "src/routes";
 
-export default function App() {
+export default function App(): React.ReactElement {
   return (
     <Provider store={store}>
       <div>

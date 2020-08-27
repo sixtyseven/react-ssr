@@ -1,5 +1,5 @@
 const path = require("path");
-const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+// const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { APP_DIST_FOLDER } = require("./appPath");
 
@@ -9,6 +9,8 @@ const outputPath = isDevelopment
   ? path.resolve(APP_DIST_FOLDER.distDev)
   : path.resolve(APP_DIST_FOLDER.distProd);
 
+const srcPath = path.resolve("src");
+
 const config = {
   mode: "production", // for both ssr dev and production
   entry: {
@@ -16,7 +18,7 @@ const config = {
   },
   output: {
     path: path.join(outputPath, "static"),
-    filename: "[name].js",
+    filename: "[name].[hash].js",
   },
   // or source-map for production,
   // but should configure server to disallow access to
@@ -25,11 +27,24 @@ const config = {
   module: {
     rules: [
       {
+        test: /\.(ts|tsx)$/,
+        enforce: "pre",
+        use: [
+          {
+            options: {
+              eslintPath: require.resolve("eslint"),
+            },
+            loader: require.resolve("eslint-loader"),
+          },
+        ],
+        include: srcPath,
+      },
+      {
         test: /\.(jsx?|tsx?)$/,
         use: {
           loader: "babel-loader",
         },
-        include: path.resolve("src"),
+        include: srcPath,
       },
       {
         test: /\.s[ac]ss$/i,
@@ -47,7 +62,7 @@ const config = {
             },
           },
         ],
-        include: path.resolve("src"),
+        include: srcPath,
       },
     ],
   },
@@ -59,6 +74,9 @@ const config = {
     }),
   ],
   resolve: {
+    alias: {
+      src: path.resolve("src"),
+    },
     extensions: [".js", ".jsx", ".ts", ".tsx", ".scss"],
     symlinks: false,
   },

@@ -39,6 +39,9 @@ module.exports = {
   plugins: [new CleanWebpackPlugin()],
 
   resolve: {
+    alias: {
+      src: path.resolve("src"),
+    },
     extensions: [".js", ".jsx", ".ts", ".tsx"],
     symlinks: false,
   },

@@ -27,8 +27,6 @@ function start() {
   };
 
   const init = () => {
-    console.log("init");
-
     nodemon({
       script: `./${APP_DIST_FOLDER.distServerDev}/index.js`,
       ext: "js",
@@ -62,6 +60,8 @@ function start() {
   serverCompiler.watch({}, (err, stats) => {
     if (err || stats.hasErrors()) {
       // Handle errors here
+
+      err = err || stats.toString();
       console.error(
         chalk.red("[compile server] webpack server compile error"),
         err
@@ -75,6 +75,7 @@ function start() {
   clientCompiler.watch({}, (err, stats) => {
     if (err || stats.hasErrors()) {
       // Handle errors here
+      err = err || stats.toString();
       console.error(
         chalk.red("[compile client] webpack client compile error"),
         err
