@@ -77,7 +77,7 @@ app.get("/*", (req, res) => {
   });
 });
 
-const port = process.env.PORT || 3030;
+const port = process.env.PORT || (isDevelopEnv ? 3030 : 80);
 
 app.listen(port, function listenHandler() {
   console.info(`Running on PORT ${port}... v16 `);
