@@ -1,6 +1,5 @@
 const path = require("path");
 const nodeExternals = require("webpack-node-externals");
-const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const { APP_DIST_FOLDER } = require("./appPath");
 
 const isDevelopment = process.env.NODE_ENV === "development";
@@ -8,6 +7,8 @@ const isDevelopment = process.env.NODE_ENV === "development";
 const outputPath = isDevelopment
   ? path.resolve(APP_DIST_FOLDER.distServerDev)
   : path.resolve(APP_DIST_FOLDER.distServerProd);
+
+const srcPath = path.resolve("src");
 
 module.exports = {
   mode: isDevelopment ? "development" : "production",
@@ -30,17 +31,17 @@ module.exports = {
         use: {
           loader: "babel-loader",
         },
-        include: [path.resolve("src"), path.resolve("config")],
+        include: [srcPath, path.resolve("config")],
       },
-      { test: /\.(s[ca]ss|css)$/, loader: "null-loader" },
+      { test: /\.(s[ca]ss|css)$/, loader: "null-loader", include: srcPath },
     ],
   },
 
-  plugins: [new CleanWebpackPlugin()],
+  plugins: [],
 
   resolve: {
     alias: {
-      src: path.resolve("src"),
+      src: srcPath,
     },
     extensions: [".js", ".jsx", ".ts", ".tsx"],
     symlinks: false,
